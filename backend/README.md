@@ -18,9 +18,9 @@ npm install
 
 # 2. Copy and fill environment variables
 cp .env.example .env
+# Edit .env → set DATABASE_URL to your PostgreSQL connection string
 
-# 3. Generate & run DB migrations
-npm run db:generate
+# 3. Run migrations (migration files are already generated)
 npm run db:migrate
 
 # 4. Seed initial data (admin + sample brands/products)
@@ -131,8 +131,12 @@ Or use **Vercel Postgres** (Storage tab in Vercel dashboard) — connection stri
 
 ### 2. Run migrations locally (one-time)
 ```bash
-DATABASE_URL=your_connection_string npm run db:migrate
-DATABASE_URL=your_connection_string npx tsx src/db/seed.ts
+# Create .env file (works on Windows, Mac, Linux)
+cp .env.example .env
+# Then edit .env and set DATABASE_URL=your_neon_connection_string
+
+npm run db:migrate
+npx tsx src/db/seed.ts
 ```
 
 ### 3. Deploy to Vercel

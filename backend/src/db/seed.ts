@@ -8,6 +8,10 @@ import { users, brands, products } from './schema.js';
 import { hashPassword } from '../utils/hash.js';
 
 async function seed() {
+  if (!process.env.DATABASE_URL && !process.env.POSTGRES_URL) {
+    console.error('ERROR: DATABASE_URL is not set. Create a .env file first.');
+    process.exit(1);
+  }
   console.log('Seeding database…');
 
   // Admin user
