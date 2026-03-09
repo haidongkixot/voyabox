@@ -123,8 +123,29 @@ npm run dev
 | Upload photo | +25 |
 | First review (per product) | +50 bonus |
 
-## Deployment (Railway)
-1. Connect GitHub repo to Railway
-2. Set root directory to `backend/`
-3. Add all environment variables
-4. Railway auto-detects Node.js and runs `npm start`
+## Deployment (Vercel)
+
+### 1. Set up a PostgreSQL database
+Use **Neon** (free, serverless-native) at https://neon.tech — create a project and copy the connection string.
+Or use **Vercel Postgres** (Storage tab in Vercel dashboard) — connection string is auto-injected as `POSTGRES_URL`.
+
+### 2. Run migrations locally (one-time)
+```bash
+DATABASE_URL=your_connection_string npm run db:migrate
+DATABASE_URL=your_connection_string npx tsx src/db/seed.ts
+```
+
+### 3. Deploy to Vercel
+```bash
+npm i -g vercel
+vercel login
+cd backend/
+vercel --prod
+```
+Or connect the GitHub repo in the Vercel dashboard:
+- **Root directory**: `backend`
+- **Build command**: `npm run build`
+- **Output directory**: (leave blank — Vercel handles `api/` automatically)
+
+### 4. Add environment variables in Vercel dashboard
+Copy all variables from `.env.example` into Vercel → Settings → Environment Variables.
